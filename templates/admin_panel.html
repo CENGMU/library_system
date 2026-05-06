@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}管理后台{% endblock %}
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h3 class="fw-bold mb-0">管理后台</h3>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-dark" href="{{ url_for('admin.books_admin') }}">图书管理</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('admin.categories_admin') }}">分类管理</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('admin.users_admin') }}">用户管理</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-3">
+    <div class="card shadow-sm rounded-4 stat-card">
+      <div class="card-body">
+        <div class="text-muted">用户数</div>
+        <div class="display-6 fw-bold">{{ total_users }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm rounded-4 stat-card">
+      <div class="card-body">
+        <div class="text-muted">图书数</div>
+        <div class="display-6 fw-bold">{{ total_books }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm rounded-4 stat-card">
+      <div class="card-body">
+        <div class="text-muted">借阅中</div>
+        <div class="display-6 fw-bold">{{ borrowing }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm rounded-4 stat-card">
+      <div class="card-body">
+        <div class="text-muted">逾期</div>
+        <div class="display-6 fw-bold">{{ overdue }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm rounded-4 mt-4">
+  <div class="card-body">
+    <h5 class="fw-bold mb-3">热门图书 TOP5</h5>
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead class="table-light">
+          <tr><th>书名</th><th>借阅次数</th></tr>
+        </thead>
+        <tbody>
+          {% for t in top %}
+            <tr><td>{{ t[0] }}</td><td>{{ t[1] }}</td></tr>
+          {% endfor %}
+          {% if top|length == 0 %}
+            <tr><td colspan="2" class="text-center text-muted">暂无数据</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

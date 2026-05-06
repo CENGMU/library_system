@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}图书详情{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-8">
+    <div class="card shadow-sm rounded-4">
+      <div class="card-body p-4">
+        <h4 class="fw-bold">{{ book.title }}</h4>
+        <div class="text-muted">作者：{{ book.author or '-' }}</div>
+        <hr>
+        <div class="row g-2 small">
+          <div class="col-md-6">ISBN：{{ book.isbn or '-' }}</div>
+          <div class="col-md-6">出版社：{{ book.publisher or '-' }}</div>
+          <div class="col-md-6">出版年：{{ book.publish_year or '-' }}</div>
+          <div class="col-md-6">分类：{{ book.category.name if book.category else '未分类' }}</div>
+          <div class="col-md-12">标签：{{ book.tags or '-' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm rounded-4">
+      <div class="card-body p-4">
+        <div class="fw-bold mb-2">借阅</div>
+        <div class="text-muted small mb-3">库存 {{ book.available_copies }}/{{ book.total_copies }}</div>
+
+        <form method="post" action="{{ url_for('main.borrow', book_id=book.id) }}">
+          <button class="btn btn-dark w-100" {% if book.available_copies <= 0 %}disabled{% endif %}>
+            {% if book.available_copies <= 0 %}库存不足{% else %}立即借阅{% endif %}
+          </button>
+        </form>
+        <a class="btn btn-link w-100 mt-2" href="{{ url_for('main.books') }}">返回列表</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

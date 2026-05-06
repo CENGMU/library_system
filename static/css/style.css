@@ -1,0 +1,9 @@
+body { background:#f6f7fb; }
+.hero{
+  background: linear-gradient(180deg, #ffffff, #f2f4ff);
+  border: 1px solid rgba(0,0,0,.06);
+}
+.card { border: 1px solid rgba(0,0,0,.06); }
+.stat-card .display-6 { line-height: 1; }
+.page-link { color: #111; }
+.page-item.active .page-link { background: #111; border-color: #111; }

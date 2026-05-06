@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}登录{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm rounded-4">
+      <div class="card-body p-4">
+        <h4 class="fw-bold mb-3">登录</h4>
+        <form method="post" action="{{ url_for('auth.login_post') }}">
+          <div class="mb-3">
+            <label class="form-label">用户名</label>
+            <input class="form-control" name="username" placeholder="请输入用户名" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">密码</label>
+            <input class="form-control" name="password" type="password" placeholder="请输入密码" required>
+          </div>
+          <button class="btn btn-dark w-100">登录</button>
+          <div class="mt-3 text-muted small">
+            还没有账号？<a href="{{ url_for('auth.register') }}">去注册</a>
+          </div>
+          <div class="mt-2 text-muted small">
+            管理员默认账号：admin / admin123
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}我的借阅{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h4 class="fw-bold mb-0">我的借阅</h4>
+</div>
+
+<div class="card shadow-sm rounded-4">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>书名</th>
+            <th>借阅时间</th>
+            <th>应还时间</th>
+            <th>状态</th>
+            <th class="text-end">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in records %}
+          <tr>
+            <td>{{ r.book.title }}</td>
+            <td>{{ r.borrow_time.strftime('%Y-%m-%d') }}</td>
+            <td>
+              {{ r.due_time.strftime('%Y-%m-%d') }}
+              {% if r.is_overdue and r.status != 'returned' %}
+                <span class="badge text-bg-danger ms-1">逾期</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if r.status == 'returned' %}
+                <span class="badge text-bg-success">已归还</span>
+              {% else %}
+                <span class="badge text-bg-warning">借阅中</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              {% if r.status != 'returned' %}
+              <form method="post" action="{{ url_for('main.return_book', record_id=r.id) }}">
+                <button class="btn btn-sm btn-outline-dark">归还</button>
+              </form>
+              {% else %}
+                <span class="text-muted small">-</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+          {% if records|length == 0 %}
+          <tr><td colspan="5" class="text-center text-muted py-4">暂无借阅记录</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

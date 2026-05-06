@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}用户管理{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h4 class="fw-bold mb-0">用户管理</h4>
+  <a class="btn btn-outline-dark" href="{{ url_for('admin.panel') }}">返回面板</a>
+</div>
+
+<div class="card shadow-sm rounded-4">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr><th>ID</th><th>用户名</th><th>邮箱</th><th>角色</th><th class="text-end">操作</th></tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email or '-' }}</td>
+            <td><span class="badge {% if u.role=='admin' %}text-bg-dark{% else %}text-bg-secondary{% endif %}">{{ u.role }}</span></td>
+            <td class="text-end">
+              <form method="post" action="{{ url_for('admin.user_toggle', user_id=u.id) }}">
+                <button class="btn btn-sm btn-outline-dark">切换角色</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if users|length == 0 %}
+          <tr><td colspan="5" class="text-center text-muted py-4">暂无用户</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
